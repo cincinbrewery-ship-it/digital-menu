@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CIN CIN BREWERY | Digital Menu & Screen Saver</title>
+<style>
+:root {
+  --bg: #0f1310;
+  --panel: #18201a;
+  --panel-border: #28342b;
+  --ink: #f7f5f0;
+  --muted: #a3b0a5;
+  --accent: #e5b352;
+  --accent-glow: rgba(229, 179, 82, 0.2);
+  --line: #2d3830;
+}
+
+* {
+  box-sizing: border-box;
+  user-select: none;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans JP", sans-serif;
+  overflow: hidden;
+}
+
+.screen {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 42% 58%;
+  padding: 3vh 2.5vw;
+  gap: 2vw;
+  background: radial-gradient(circle at 10% 10%, #1e2820 0%, #0f1310 65%);
+}
+
+/* メニューエリア */
+.menu {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.brand {
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 1.5vh;
+  margin-bottom: 1.5vh;
+}
+
+.brand small {
+  letter-spacing: 0.3em;
+  color: var(--accent);
+  font-size: 1.1vw;
+  font-weight: 700;
+  text-transform: uppercase;
+  display: block;
+}
+
+.brand h1 {
+  font-size: 3.2vw;
+  letter-spacing: 0.05em;
+  margin: 0.3vh 0;
+  font-weight: 800;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.brand p {
+  font-size: 1.05vw;
+  color: var(--muted);
+  margin: 0;
+  letter-spacing: 0.15em;
+}
+
+/* カテゴリナビゲーション */
+.categoryNav {
+  display: flex;
+  gap: 0.6vw;
+  flex-wrap: wrap;
+  margin-bottom: 1.5vh;
+}
+
+.categoryTab {
+  border: 1px solid var(--panel-border);
+  background: var(--panel);
+  color: var(--muted);
+  padding: 0.8vh 1.2vw;
+  border-radius: 6px;
+  font-size: 0.9vw;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.categoryTab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #000;
+  box-shadow: 0 0 15px var(--accent-glow);
+}
+
+/* メニューリスト */
+.section {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2vh;
+}
+
+.section h2 {
+  font-size: 1.6vw;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  margin: 0 0 1vh;
+  text-transform: uppercase;
+  border-left: 4px solid var(--accent);
+  padding-left: 0.8vw;
+}
+
+.item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 1.2vh 1vw;
+  background: rgba(27, 33, 29, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.item .info {
+  flex: 1;
+  padding-right: 1vw;
+}
+
+.item .name {
+  font-size: 1.25vw;
+  font-weight: 700;
+  color: #fff;
+}
+
+.item .desc {
+  font-size: 0.85vw;
+  color: var(--muted);
+  margin-top: 0.3vh;
+}
+
+.item .price {
+  font-size: 1.3vw;
+  white-space: nowrap;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.note {
+  padding-top: 1.5vh;
+  border-top: 1px solid var(--line);
+  font-size: 0.85vw;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ビジュアルスライドショーエリア */
+.visual {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #151a16;
+  border: 1px solid var(--panel-border);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+.slide-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 1s ease-in-out;
+}
+
+.shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.85) 100%);
+  pointer-events: none;
+}
+
+.caption {
+  position: absolute;
+  left: 5%;
+  bottom: 6%;
+  right: 5%;
+  z-index: 2;
+}
+
+.caption .eyebrow {
+  font-size: 1.1vw;
+  letter-spacing: 0.25em;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 0.5vh;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+.caption h2 {
+  font-size: 2.8vw;
+  margin: 0 0 1vh;
+  color: #fff;
+  font-weight: 800;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+}
+
+.caption p {
+  font-size: 1.2vw;
+  margin: 0;
+  color: #e0e0e0;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+.badge {
+  position: absolute;
+  top: 4%;
+  right: 4%;
+  padding: 0.8vh 1.4vw;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 30px;
+  background: rgba(15, 19, 16, 0.7);
+  backdrop-filter: blur(10px);
+  font-size: 0.9vw;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* 設定ボタン・ダイアログ */
+.controls {
+  position: fixed;
+  right: 1vw;
+  top: 1vh;
+  z-index: 20;
+  opacity: 0.15;
+  transition: opacity 0.3s;
+}
+
+.controls:hover {
+  opacity: 1;
+}
+
+.btn {
+  background: #242d26;
+  color: white;
+  border: 1px solid #455448;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn:hover {
+  background: var(--accent);
+  color: #000;
+}
+
+#admin {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 30;
+  overflow: auto;
+  padding: 4vh 4vw;
+  backdrop-filter: blur(10px);
+}
+
+.modal {
+  max-width: 900px;
+  margin: auto;
+  background: #171e19;
+  border: 1px solid #425044;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+}
+
+.modal h2 {
+  margin-top: 0;
+  color: var(--accent);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 12px 0;
+}
+
+.field label {
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.field input, .field textarea {
+  background: #0d120e;
+  color: white;
+  border: 1px solid #3a473c;
+  border-radius: 6px;
+  padding: 12px;
+  font: inherit;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.help {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* プログレスバー */
+.progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  background: var(--accent);
+  width: 0%;
+  transition: width 0.1s linear;
+}
+</style>
+</head>
+<body>
+
+<div class="screen">
+  <!-- 左半面: デジタルメニュー -->
+  <section class="menu">
+    <div>
+      <header class="brand">
+        <small>YAMANAKAKO · MT. FUJI</small>
+        <h1>CIN CIN BREWERY</h1>
+        <p>CRAFT BEER & TAPROOM</p>
+      </header>
+      <nav class="categoryNav" id="categoryNav" aria-label="Menu categories"></nav>
+      <div id="menuContent"></div>
+    </div>
+    <footer class="note" id="footerNote">
+      Mt. Fuji spring water · 1,001m above sea level<br>
+      Ask our team about today's special tap list.
+    </footer>
+  </section>
+
+  <!-- 右半面: スライドショー -->
+  <section class="visual" id="visual">
+    <div class="badge">CIN CIN · TAPROOM</div>
+    <img id="slideImage" class="slide-media" alt="CIN CIN Brewery slideshow">
+    <video id="slideVideo" class="slide-media" autoPlay muted loop playsInline style="display:none"></video>
+    <div class="shade"></div>
+    <div class="caption">
+      <div class="eyebrow" id="captionEyebrow">GOOD BEER. GOOD TIMES.</div>
+      <h2 id="captionTitle">A taste of Yamanakako</h2>
+      <p id="captionSub">Crafted at the foot of Mt. Fuji</p>
+    </div>
+    <div class="progress-bar" id="progressBar"></div>
+  </section>
+</div>
+
+<!-- 右上のコントロール＆設定パネル -->
+<div class="controls">
+  <button class="btn" onclick="openAdmin()">⚙ 設定</button>
+</div>
+
+<div id="admin">
+  <div class="modal">
+    <h2>サイネージ設定 & ステータス</h2>
+    <div class="grid">
+      <div>
+        <div class="field">
+          <label>Google Apps Script API URL</label>
+          <input id="apiUrlInput" placeholder="https://script.google.com/macros/s/.../exec">
+          <p class="help">GASウェブアプリのデプロイURLを入力します。</p>
+        </div>
+        <div class="field">
+          <label>データ取得ステータス</label>
+          <p class="help" id="dataStatus">確認中...</p>
+          <p class="help" id="mediaStatus">確認中...</p>
+        </div>
+        <div class="field">
+          <label>下部メッセージ</label>
+          <input id="footerInput">
+        </div>
+      </div>
+      <div>
+        <div class="field">
+          <label>スライド切替間隔（秒）</label>
+          <input id="intervalInput" type="number" min="3" max="120" value="8">
+        </div>
+        <div class="field">
+          <label>キャッチコピー</label>
+          <input id="eyebrowInput">
+        </div>
+        <div class="field">
+          <label>見出し</label>
+          <input id="titleInput">
+        </div>
+        <div class="field">
+          <label>説明文</label>
+          <input id="subInput">
+        </div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn" onclick="saveAdmin()">保存して更新</button>
+      <button class="btn" onclick="closeAdmin()">閉じる</button>
+      <button class="btn" onclick="resetDemo()">デフォルトに戻す</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// デフォルトAPI URL (ご自身のGASウェブアプリURLをセット)
+let MENU_API_URL = localStorage.getItem("cc_api_url") || "https://script.google.com/macros/s/AKfycbwyGhRRthBAfF0cXk0AdpOVi1cZ5a7udWbnA9NNBlzIzQt4eCz2CG35i3GuhbkJT7Y/exec";
+
+// バックアップ・デモデータ
+const defaultMenu = [
+  {
+    title: "BEER",
+    items: [
+      { name: "CIN CIN Pale Ale", desc: "Bright citrus · balanced bitterness", price: "¥900" },
+      { name: "Yamanakako Lager", desc: "Crisp, clean and refreshing", price: "¥850" },
+      { name: "Mt. Fuji IPA", desc: "Rich hop aroma & bold flavor", price: "¥950" }
+    ]
+  },
+  {
+    title: "FOOD",
+    items: [
+      { name: "Craft Sausage Platter", desc: "Local herbs & spices", price: "¥1,200" },
+      { name: "Fuji Trout Smoked Dip", desc: "Served with artisan crackers", price: "¥850" }
+    ]
+  }
+];
+
+const defaultSlides = [
+  {
+    type: "image",
+    src: "https://images.unsplash.com/photo-1535958636474-b021ee887b13?auto=format&fit=crop&w=1200&q=80",
+    title: "Freshly Brewed On-Site"
+  },
+  {
+    type: "image",
+    src: "https://images.unsplash.com/photo-1518176258614-458492058e65?auto=format&fit=crop&w=1200&q=80",
+    title: "Pure Fuji Spring Water"
+  }
+];
+
+let menu = defaultMenu;
+let slides = defaultSlides;
+let slideIndex = 0;
+let slideTimer = null;
+let progressTimer = null;
+let interval = 8000;
+let activeCategory = 0;
+let categoryTimer = null;
+let mediaRefreshTimer = null;
+
+const $ = id => document.getElementById(id);
+
+function formatYen(value) {
+  if (typeof value === "string" && value.includes("¥")) return value;
+  return "¥" + Number(value || 0).toLocaleString("ja-JP");
+}
+
+function convertApiItems(items) {
+  const groups = new Map();
+  items.filter(x => x.visible !== false).forEach(x => {
+    const category = String(x.category || "RECOMMENDED").toUpperCase();
+    if (!groups.has(category)) groups.set(category, []);
+    groups.get(category).push({
+      name: String(x.name || ""),
+      desc: String(x.variant || x.desc || "").trim(),
+      price: formatYen(x.price),
+      sortOrder: Number(x.sortOrder) || 9999
+    });
+  });
+
+  return [...groups.entries()].map(([title, items]) => ({
+    title,
+    items: items.sort((a, b) => a.sortOrder - b.sortOrder)
+  }));
+}
+
+async function loadMenuFromSheet() {
+  const dataStatus = $("dataStatus");
+  const mediaStatus = $("mediaStatus");
+
+  if (!MENU_API_URL || MENU_API_URL.includes("YOUR_GAS_SCRIPT_ID")) {
+    if (dataStatus) dataStatus.textContent = "⚠️ API URLが設定されていません。デモデータを使用中。";
+    return;
+  }
+
+  try {
+    const response = await fetch(MENU_API_URL + "?t=" + Date.now(), { cache: "no-store" });
+    if (!response.ok) throw new Error("HTTP Error " + response.status);
+    const data = await response.json();
+
+    if (data && Array.isArray(data.items) && data.items.length > 0) {
+      menu = convertApiItems(data.items);
+      startCategories();
+      if (dataStatus) dataStatus.textContent = "✅ スプレッドシート連携成功 (" + data.items.length + "件)";
+    }
+
+    if (data && Array.isArray(data.media) && data.media.length > 0) {
+      slides = data.media
+        .filter(f => f && f.url)
+        .map(f => ({
+          type: f.mimeType && f.mimeType.startsWith("video") ? "video" : "image",
+          src: f.url,
+          title: f.name ? f.name.replace(/\.[^/.]+$/, "") : "CIN CIN BREWERY"
+        }));
+      if (mediaStatus) mediaStatus.textContent = "✅ Drive写真連携成功 (" + slides.length + "枚)";
+      startSlides();
+    }
+  } catch (error) {
+    if (dataStatus) dataStatus.textContent = "❌ 接続失敗: " + error.message;
+    console.warn("GAS Connection failed. Fallback to demo mode.", error);
+  }
+}
+
+function renderMenu() {
+  if (!menu.length) return;
+  activeCategory = ((activeCategory % menu.length) + menu.length) % menu.length;
+
+  $("categoryNav").innerHTML = menu.map((s, i) => `
+    <button class="categoryTab ${i === activeCategory ? "active" : ""}" onclick="showCategory(${i}, true)">
+      ${esc(s.title)}
+    </button>
+  `).join("");
+
+  const s = menu[activeCategory];
+  $("menuContent").innerHTML = `
+    <section class="section">
+      <h2>${esc(s.title)}</h2>
+      <div class="item-list">
+        ${s.items.map(i => `
+          <div class="item">
+            <div class="info">
+              <div class="name">${esc(i.name)}</div>
+              ${i.desc ? `<div class="desc">${esc(i.desc)}</div>` : ''}
+            </div>
+            <div class="price">${esc(i.price)}</div>
+          </div>
+        `).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function showCategory(index, manual = false) {
+  activeCategory = index;
+  renderMenu();
+  if (manual) {
+    clearInterval(categoryTimer);
+    categoryTimer = setInterval(() => showCategory((activeCategory + 1) % menu.length), 10000);
+  }
+}
+
+function startCategories() {
+  clearInterval(categoryTimer);
+  activeCategory = 0;
+  renderMenu();
+  if (menu.length > 1) {
+    categoryTimer = setInterval(() => showCategory((activeCategory + 1) % menu.length), 10000);
+  }
+}
+
+function esc(v) {
+  return String(v ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+function animateProgressBar(duration) {
+  const bar = $("progressBar");
+  if (!bar) return;
+  bar.style.width = "0%";
+  let start = performance.now();
+  
+  clearInterval(progressTimer);
+  progressTimer = setInterval(() => {
+    let elapsed = performance.now() - start;
+    let pct = Math.min((elapsed / duration) * 100, 100);
+    bar.style.width = pct + "%";
+    if (pct >= 100) clearInterval(progressTimer);
+  }, 50);
+}
+
+function setSlide() {
+  if (!slides.length) return;
+  const s = slides[slideIndex % slides.length];
+  const img = $("slideImage");
+  const vid = $("slideVideo");
+
+  $("captionEyebrow").textContent = localStorage.getItem("cc_eyebrow") || "GOOD BEER. GOOD TIMES.";
+  $("captionTitle").textContent = s.title || localStorage.getItem("cc_title") || "A taste of Yamanakako";
+  $("captionSub").textContent = localStorage.getItem("cc_sub") || "Crafted at the foot of Mt. Fuji";
+
+  if (s.type === "video") {
+    img.style.display = "none";
+    vid.style.display = "block";
+    vid.src = s.src;
+    vid.play().catch(() => {});
+  } else {
+    vid.pause();
+    vid.style.display = "none";
+    img.style.display = "block";
+    img.src = s.src;
+  }
+
+  animateProgressBar(interval);
+  slideIndex = (slideIndex + 1) % slides.length;
+}
+
+function startSlides() {
+  clearInterval(slideTimer);
+  setSlide();
+  slideTimer = setInterval(setSlide, interval);
+}
+
+function openAdmin() {
+  $("apiUrlInput").value = MENU_API_URL;
+  $("footerInput").value = $("footerNote").innerText;
+  $("intervalInput").value = interval / 1000;
+  $("eyebrowInput").value = localStorage.getItem("cc_eyebrow") || "GOOD BEER. GOOD TIMES.";
+  $("titleInput").value = localStorage.getItem("cc_title") || "A taste of Yamanakako";
+  $("subInput").value = localStorage.getItem("cc_sub") || "Crafted at the foot of Mt. Fuji";
+  $("admin").style.display = "block";
+}
+
+function closeAdmin() { 
+  $("admin").style.display = "none"; 
+}
+
+function saveAdmin() {
+  MENU_API_URL = $("apiUrlInput").value.trim();
+  localStorage.setItem("cc_api_url", MENU_API_URL);
+
+  $("footerNote").innerText = $("footerInput").value;
+  localStorage.setItem("cc_footer", $("footerInput").value);
+
+  interval = Math.max(3, Math.min(120, Number($("intervalInput").value) || 8)) * 1000;
+  localStorage.setItem("cc_interval", interval);
+  localStorage.setItem("cc_eyebrow", $("eyebrowInput").value);
+  localStorage.setItem("cc_title", $("titleInput").value);
+  localStorage.setItem("cc_sub", $("subInput").value);
+
+  closeAdmin();
+  loadMenuFromSheet();
+  startSlides();
+}
+
+function resetDemo() {
+  if (confirm("設定を初期化してデモ表示に戻しますか？")) {
+    localStorage.clear();
+    location.reload();
+  }
+}
+
+// 初期化
+window.onload = () => {
+  interval = Number(localStorage.getItem("cc_interval") || 8000);
+  if (localStorage.getItem("cc_footer")) {
+    $("footerNote").innerText = localStorage.getItem("cc_footer");
+  }
+  startCategories();
+  startSlides();
+  loadMenuFromSheet();
+  
+  // 60秒毎にGoogle Drive / Sheetの最新データを受信
+  mediaRefreshTimer = setInterval(loadMenuFromSheet, 60000);
+};
+
+document.addEventListener("keydown", e => { 
+  if (e.key === "Escape") closeAdmin(); 
+});
+</script>
+</body>
+</html>
