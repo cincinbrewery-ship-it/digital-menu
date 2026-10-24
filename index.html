@@ -1,700 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
-
-<title>CIN CIN BREWERY | BEER MENU</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CIN CIN BREWERY | Digital Menu</title>
 <style>
-
-:root {
-  --bg: #11110f;
-  --card: #20201c;
-  --text: #f4f0e6;
-  --muted: #aaa69b;
-  --accent: #d8a94e;
-  --border: rgba(255,255,255,.12);
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background: var(--bg);
-  color: var(--text);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-  padding: 2.5vh 3vw;
-}
-
-
-/* HEADER */
-
-header {
-  height: 12%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 2vh;
-  flex-shrink: 0;
-}
-
-.logo {
-  font-size: 2.8vw;
-  font-weight: 800;
-  letter-spacing: .12em;
-}
-
-.logo span {
-  color: var(--accent);
-}
-
-.header-right {
-  text-align: right;
-}
-
-.header-right .location {
-  font-size: 1vw;
-  color: var(--muted);
-  letter-spacing: .15em;
-}
-
-.header-right .altitude {
-  font-size: 1.2vw;
-  color: var(--accent);
-  margin-top: .5vh;
-}
-
-
-/* TITLE */
-
-.title-area {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  margin-bottom: 2vh;
-  flex-shrink: 0;
-}
-
-.title-area h1 {
-  font-size: 2.4vw;
-  margin: 0;
-  letter-spacing: .12em;
-}
-
-.title-area p {
-  color: var(--muted);
-  font-size: 1vw;
-  margin: 0;
-}
-
-
-/* GRID */
-
-#beer-grid {
-
-  flex: 1;
-
-  display: grid;
-
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-
-  grid-template-rows: repeat(2, minmax(0, 1fr));
-
-  gap: 1.3vw;
-
-  min-height: 0;
-
-}
-
-
-/* CARD */
-
-.beer-card {
-
-  background: var(--card);
-
-  border: 1px solid var(--border);
-
-  border-radius: 12px;
-
-  overflow: hidden;
-
-  display: flex;
-
-  flex-direction: column;
-
-  min-height: 0;
-
-}
-
-
-/* IMAGE */
-
-.beer-image {
-
-  width: 100%;
-
-  height: 52%;
-
-  background: #30302b;
-
-  overflow: hidden;
-
-  flex-shrink: 0;
-
-}
-
-.beer-image img {
-
-  width: 100%;
-
-  height: 100%;
-
-  object-fit: cover;
-
-  display: block;
-
-}
-
-.no-image {
-
-  width: 100%;
-
-  height: 100%;
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-  color: #777;
-
-  font-size: 1.2vw;
-
-  letter-spacing: .15em;
-
-}
-
-
-/* INFO */
-
-.beer-info {
-
-  padding: 1.2vh 1vw;
-
-  display: flex;
-
-  flex-direction: column;
-
-  flex: 1;
-
-  min-height: 0;
-
-}
-
-.beer-name {
-
-  font-size: 1.45vw;
-
-  font-weight: 800;
-
-  line-height: 1.15;
-
-  margin-bottom: .6vh;
-
-}
-
-.beer-style {
-
-  color: var(--muted);
-
-  font-size: .95vw;
-
-}
-
-.beer-abv {
-
-  color: var(--accent);
-
-  font-size: 1vw;
-
-  margin-top: .5vh;
-
-  font-weight: 700;
-
-}
-
-
-/* PRICES */
-
-.beer-prices {
-
-  margin-top: auto;
-
-  padding-top: 1vh;
-
-  border-top: 1px solid var(--border);
-
-  display: flex;
-
-  justify-content: space-between;
-
-  gap: .5vw;
-
-}
-
-.price-block {
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: .4vh;
-
-}
-
-.price-size {
-
-  font-size: .8vw;
-
-  color: var(--muted);
-
-}
-
-.price-value {
-
-  font-size: 1.25vw;
-
-  font-weight: 800;
-
-}
-
-
-/* FOOTER */
-
-footer {
-
-  height: 6%;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  color: var(--muted);
-
-  font-size: .9vw;
-
-  border-top: 1px solid var(--border);
-
-  margin-top: 2vh;
-
-  flex-shrink: 0;
-
-}
-
-footer span {
-  color: var(--accent);
-}
-
-
-/* MESSAGE */
-
-#message {
-
-  position: absolute;
-
-  inset: 0;
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-  background: var(--bg);
-
-  font-size: 1.5vw;
-
-  color: var(--muted);
-
-  z-index: 10;
-
-  text-align: center;
-
-  padding: 3vw;
-
-}
-
-.hidden {
-  display: none !important;
-}
-
+:root{--bg:#101713;--panel:#18221c;--text:#f4f1e8;--muted:#aeb8ae;--gold:#dcae4f;--line:rgba(235,241,232,.16)}
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+body{padding:2.4vh 2.2vw;display:grid;grid-template-columns:40% 1fr;gap:1.7vw;background:radial-gradient(ellipse at 20% 10%,#243329 0%,#17211b 42%,#101713 100%)}
+.left{min-width:0;display:flex;flex-direction:column;min-height:0}
+.brand{border-bottom:1px solid var(--line);padding-bottom:2vh;flex-shrink:0}
+.eyebrow{font-size:1.1vw;letter-spacing:.28em;font-weight:700;color:var(--gold);margin-bottom:.7vh}
+.logo{font-size:3.15vw;line-height:1;font-weight:900;letter-spacing:.055em;white-space:nowrap}
+.subtitle{font-size:1.05vw;color:#c0c8c0;margin-top:.9vh}
+.tabs{display:flex;gap:.55vw;margin:1.8vh 0 2.1vh;flex-shrink:0}
+.tab{border:1px solid var(--line);border-radius:5px;padding:.75vh .85vw;color:#aeb8ae;font-size:.78vw;font-weight:700;letter-spacing:.04em;white-space:nowrap}
+.tab.active{background:var(--gold);border-color:var(--gold);color:#172018}
+.section-title{font-size:1.55vw;letter-spacing:.13em;color:var(--gold);margin:0 0 .8vh;font-weight:800;flex-shrink:0}
+#beer-list{min-height:0;overflow:hidden;display:flex;flex-direction:column}
+.beer-row{padding:1.05vh 0 .9vh;border-bottom:1px solid rgba(235,241,232,.11);display:grid;grid-template-columns:minmax(0,1fr) 10.5vw;gap:.7vw;align-items:center;flex-shrink:0}
+.beer-main{min-width:0}
+.beer-name{font-size:1.22vw;font-weight:800;line-height:1.16;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.beer-style{font-size:.78vw;color:#b6c0b7;margin-top:.28vh;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.beer-abv{font-size:.72vw;color:var(--gold);margin-top:.25vh;font-weight:700}
+.price-header,.prices{display:grid;grid-template-columns:1fr 1fr;gap:.25vw;text-align:center;white-space:nowrap}
+.price-header{margin:0 0 .25vh auto;width:10.5vw;color:#aeb8ae;font-size:.58vw;font-weight:800;letter-spacing:.1em}
+.prices{align-items:center}
+.price-line{min-width:0;font-size:.88vw;font-weight:800;display:flex;flex-direction:column;align-items:center;gap:.18vh}
+.price-line small{font-size:.58vw;color:#aeb8ae;font-weight:600;letter-spacing:.04em}
+.price-line.empty{visibility:hidden}
+.price-line.single{grid-column:1 / -1;justify-self:center}
+.price-line.single small{color:var(--gold)}
+.footer{margin-top:auto;padding-top:1.2vh;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:1vw;color:#aeb8ae;font-size:.68vw;flex-shrink:0}
+.footer strong{color:var(--gold);font-weight:700}
+.right{position:relative;min-width:0;min-height:0;border:1px solid rgba(235,241,232,.18);border-radius:17px;overflow:hidden;background:linear-gradient(145deg,#29332c,#131a16 75%);box-shadow:0 14px 50px rgba(0,0,0,.22)}
+.slide-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease;filter:brightness(.72)}
+.slide-image.show{opacity:1}
+.right:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,10,7,.05) 35%,rgba(5,10,7,.25) 58%,rgba(5,10,7,.92) 100%);pointer-events:none}
+.pill{position:absolute;z-index:2;right:2.3%;top:2.7%;border:1px solid rgba(255,255,255,.5);border-radius:30px;padding:.8vh 1vw;font-size:.78vw;letter-spacing:.12em;background:rgba(15,20,17,.25)}
+.slide-copy{position:absolute;z-index:2;left:3%;right:3%;bottom:4.2%}
+.slide-kicker{font-size:1vw;letter-spacing:.23em;color:#f0c66c;font-weight:700;margin-bottom:1vh}
+.slide-title{font-size:2.55vw;font-weight:900;line-height:1.08;margin:0 0 .8vh}
+.slide-desc{font-size:1.05vw;color:#e0e4de;margin:0}
+.slide-dots{position:absolute;z-index:3;right:3%;bottom:4.8%;display:flex;gap:.4vw}
+.slide-progress{position:absolute;z-index:4;left:0;right:0;bottom:0;height:5px;background:rgba(255,255,255,.18);overflow:hidden}
+.slide-progress-fill{height:100%;width:0;background:var(--gold);transition:width 20s linear}
+.dot{width:.42vw;height:.42vw;border-radius:50%;background:rgba(255,255,255,.4)}
+.dot.active{background:var(--gold)}
+#message{position:fixed;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;background:#101713;color:#c3c9c2;font-size:1.3vw;text-align:center;padding:3vw}
+.hidden{display:none!important}
+@media(max-aspect-ratio:4/3){body{grid-template-columns:43% 1fr}.logo{font-size:3.3vw}.beer-name{font-size:1.35vw}}
 </style>
-
 </head>
-
-
 <body>
-
-
-<div id="message">
-  Loading CIN CIN BEER MENU...
-</div>
-
-
-<header>
-
-  <div class="logo">
-    CIN CIN <span>BREWERY</span>
-  </div>
-
-  <div class="header-right">
-
-    <div class="location">
-      YAMANAKAKO · YAMANASHI · JAPAN
-    </div>
-
-    <div class="altitude">
-      MT. FUJI SPRING WATER · 1001M
-    </div>
-
-  </div>
-
-</header>
-
-
-<div class="title-area">
-
-  <h1>OUR BEER</h1>
-
-  <p>FRESHLY BREWED AT CIN CIN BREWERY</p>
-
-</div>
-
-
-<main id="beer-grid"></main>
-
-
-<footer>
-
-  <div>
-    BREWED WITH <span>MT. FUJI SPRING WATER</span>
-  </div>
-
-  <div>
-    CIN CIN BREWERY & TAPROOM
-  </div>
-
-</footer>
-
-
+<div id="message">Loading CIN CIN BREWERY menu...</div>
+<section class="left">
+  <header class="brand">
+    <div class="eyebrow">YAMANAKAKO · MT. FUJI</div>
+    <div class="logo">CIN CIN BREWERY</div>
+    <div class="subtitle">CRAFT BEER &amp; TAPROOM</div>
+  </header>
+  <nav class="tabs" aria-label="Menu categories">
+    <span class="tab active">BEER</span><span class="tab">COCKTAILS</span><span class="tab">SOFT DRINKS</span><span class="tab">FOOD</span>
+  </nav>
+  <h1 class="section-title">BEER</h1>
+  <main id="beer-list"></main>
+  <footer class="footer"><div>Mt. Fuji spring water · 1,001m above sea level</div><div><strong>CIN CIN</strong> BREWERY &amp; TAPROOM</div></footer>
+</section>
+<section class="right" aria-label="CIN CIN Brewery slideshow">
+  <div class="pill">CIN CIN · TAPROOM</div>
+  <img class="slide-image" id="slide-a" alt="CIN CIN Brewery beer">
+  <img class="slide-image" id="slide-b" alt="CIN CIN Brewery beer">
+  <div class="slide-copy"><div class="slide-kicker">GOOD BEER. GOOD TIMES.</div><h2 class="slide-title" id="slide-title">A taste of Yamanakako</h2><p class="slide-desc" id="slide-desc">Craft beer brewed with Mt. Fuji spring water.</p></div>
+  <div class="slide-dots" id="slide-dots"></div>
+  <div class="slide-progress" aria-label="Slideshow progress"><div class="slide-progress-fill" id="slide-progress-fill"></div></div>
+</section>
 <script>
-
-
-/**************************************************
- * API URL
- **************************************************/
-
-const MENU_API_URL =
-'https://script.google.com/macros/s/AKfycbwyGhRRthBAfF0cXk0AdpOVi1cZ5a7udWbnA9NNBlzIzQt4eCz2CG35i3GuhbkJT7Y/exec';
-
-
-/**************************************************
- * REFRESH SETTINGS
- **************************************************/
-
-const REFRESH_INTERVAL = 60 * 1000;
-
-
-/**************************************************
- * LOAD MENU
- **************************************************/
-
-async function loadMenu() {
-
-  const message =
-    document.getElementById('message');
-
-  try {
-
-    const response = await fetch(
-      MENU_API_URL + '?t=' + Date.now()
-    );
-
-    if (!response.ok) {
-      throw new Error('API connection failed');
-    }
-
-    const data = await response.json();
-
-    if (!data.success) {
-      throw new Error(
-        data.error || 'Menu loading failed'
-      );
-    }
-
-    renderMenu(data.items || []);
-
-    message.classList.add('hidden');
-
-  } catch (error) {
-
-    console.error(error);
-
-    message.textContent =
-      'Unable to load menu. Please check connection.';
-
-  }
-
+const MENU_API_URL='https://script.google.com/macros/s/AKfycby_i1aRFelLaKmk_ylF9glFk7l6AKu2b8R5MMj6Qzw4lkBK666vv9eK1IQxrgzuD604/exec';
+const REFRESH_INTERVAL=60000;
+const SLIDE_INTERVAL=20000;
+let slideItems=[],slideIndex=0,showingA=true,slideTimer=null;
+async function loadMenu(){
+ const message=document.getElementById('message');
+ try{
+  const response=await fetch(MENU_API_URL+'?t='+Date.now());
+  if(!response.ok)throw new Error('API connection failed');
+  const data=await response.json();
+  if(!data.success)throw new Error(data.error||'Menu loading failed');
+  const items=(data.items||[]).filter(x=>x.visible!==false);
+  renderMenu(items);setupSlideshow(items);
+  message.classList.add('hidden');
+ }catch(err){console.error(err);message.textContent='メニューを読み込めません。GAS URLと公開設定を確認してください。';}
 }
-
-
-/**************************************************
- * RENDER MENU
- **************************************************/
-
-function renderMenu(items) {
-
-  const grid =
-    document.getElementById('beer-grid');
-
-  grid.innerHTML = '';
-
-
-  if (!items.length) {
-
-    grid.innerHTML =
-      '<div>No beer items available.</div>';
-
-    return;
-
+function renderMenu(items){
+ const list=document.getElementById('beer-list');list.innerHTML='';
+ if(!items.length){list.innerHTML='<div class="beer-row">No beer items available.</div>';return;}
+ const header=document.createElement('div');header.className='price-header';
+ header.innerHTML='<span>PINT</span><span>REGULAR</span>';
+ list.append(header);
+ items.slice(0,9).forEach(item=>{
+  const row=document.createElement('div');row.className='beer-row';
+  const main=document.createElement('div');main.className='beer-main';
+  const name=document.createElement('div');name.className='beer-name';name.textContent=item.name||'';
+  const style=document.createElement('div');style.className='beer-style';style.textContent=item.style||'';
+  const abv=document.createElement('div');abv.className='beer-abv';abv.textContent=item.abv?'ABV '+item.abv:'';
+  main.append(name,style,abv);
+  const prices=document.createElement('div');prices.className='prices';
+  const s1=String(item.size1||'').toLowerCase();
+  const s2=String(item.size2||'').toLowerCase();
+  const isPint=/pint|パイント/.test(s1);
+  const isRegular=/regular|レギュラー/.test(s2);
+  if(item.size1Price && item.size2Price && isPint && isRegular){
+    prices.append(priceLine('PINT',item.size1Price),priceLine('REGULAR',item.size2Price));
+  }else if(item.size1Price && item.size2Price){
+    prices.append(priceLine(item.size1,item.size1Price),priceLine(item.size2,item.size2Price));
+  }else if(item.size1Price){
+    prices.append(priceLine(item.size1||'ONE SIZE',item.size1Price,true));
+  }else if(item.size2Price){
+    prices.append(priceLine(item.size2||'ONE SIZE',item.size2Price,true));
+  }else{
+    prices.append(priceLine('',item.price?'¥'+Number(item.price).toLocaleString('ja-JP'):'',true));
   }
-
-
-  items.forEach(function(item) {
-
-    const card =
-      document.createElement('div');
-
-    card.className = 'beer-card';
-
-
-    /******** IMAGE ********/
-
-    const imageArea =
-      document.createElement('div');
-
-    imageArea.className = 'beer-image';
-
-
-    if (item.imageUrl) {
-
-      const img =
-        document.createElement('img');
-
-      img.src = item.imageUrl;
-
-      img.alt = item.name;
-
-      img.loading = 'eager';
-
-      img.onerror = function() {
-
-        imageArea.innerHTML =
-          '<div class="no-image">CIN CIN BREWERY</div>';
-
-      };
-
-      imageArea.appendChild(img);
-
-    } else {
-
-      imageArea.innerHTML =
-        '<div class="no-image">CIN CIN BREWERY</div>';
-
-    }
-
-
-    /******** INFORMATION ********/
-
-    const info =
-      document.createElement('div');
-
-    info.className = 'beer-info';
-
-
-    const name =
-      document.createElement('div');
-
-    name.className = 'beer-name';
-
-    name.textContent = item.name;
-
-
-    const style =
-      document.createElement('div');
-
-    style.className = 'beer-style';
-
-    style.textContent = item.style || '';
-
-
-    const abv =
-      document.createElement('div');
-
-    abv.className = 'beer-abv';
-
-    abv.textContent = item.abv
-      ? 'ABV ' + item.abv
-      : '';
-
-
-    /******** PRICES ********/
-
-    const prices =
-      document.createElement('div');
-
-    prices.className = 'beer-prices';
-
-
-    if (item.size1Price) {
-
-      prices.appendChild(
-        createPriceBlock(
-          item.size1,
-          item.size1Price
-        )
-      );
-
-    }
-
-
-    if (item.size2Price && item.size2) {
-
-      prices.appendChild(
-        createPriceBlock(
-          item.size2,
-          item.size2Price
-        )
-      );
-
-    }
-
-
-    info.appendChild(name);
-
-    info.appendChild(style);
-
-    info.appendChild(abv);
-
-    info.appendChild(prices);
-
-
-    card.appendChild(imageArea);
-
-    card.appendChild(info);
-
-    grid.appendChild(card);
-
-  });
-
+  row.append(main,prices);list.append(row);
+ });
 }
-
-
-/**************************************************
- * PRICE BLOCK
- **************************************************/
-
-function createPriceBlock(size, price) {
-
-  const block =
-    document.createElement('div');
-
-  block.className = 'price-block';
-
-
-  const sizeElement =
-    document.createElement('div');
-
-  sizeElement.className = 'price-size';
-
-  sizeElement.textContent = size || '';
-
-
-  const priceElement =
-    document.createElement('div');
-
-  priceElement.className = 'price-value';
-
-  priceElement.textContent = price;
-
-
-  block.appendChild(sizeElement);
-
-  block.appendChild(priceElement);
-
-
-  return block;
-
+function priceLine(size,price,single=false){
+ const el=document.createElement('div');el.className='price-line'+(single?' single':'');
+ const value=document.createElement('strong');value.textContent=price||'';
+ const label=document.createElement('small');label.textContent=size||'';
+ el.append(value,label);return el;
 }
-
-
-/**************************************************
- * AUTO REFRESH
- **************************************************/
-
-loadMenu();
-
-
-setInterval(
-  loadMenu,
-  REFRESH_INTERVAL
-);
-
-
-/**************************************************
- * RELOAD WHEN TV RETURNS
- **************************************************/
-
-document.addEventListener(
-  'visibilitychange',
-  function() {
-
-    if (!document.hidden) {
-      loadMenu();
-    }
-
-  }
-
-);
-
-
+function setupSlideshow(items){
+ const withImages=items.filter(x=>x.imageUrl);
+ slideItems=withImages.length?withImages:[];
+ const dots=document.getElementById('slide-dots');dots.innerHTML='';
+ if(slideItems.length){slideItems.forEach((_,i)=>{const d=document.createElement('span');d.className='dot'+(i===0?' active':'');dots.append(d);});showSlide(0);}
+ else{document.getElementById('slide-title').textContent='A taste of Yamanakako';document.getElementById('slide-desc').textContent='Craft beer brewed with Mt. Fuji spring water.';document.getElementById('slide-a').classList.remove('show');document.getElementById('slide-b').classList.remove('show');}
+ if(slideTimer)clearInterval(slideTimer);
+ if(slideItems.length>1)slideTimer=setInterval(()=>showSlide((slideIndex+1)%slideItems.length),SLIDE_INTERVAL);
+}
+function restartSlideProgress(){
+ const bar=document.getElementById('slide-progress-fill');
+ bar.style.transition='none';bar.style.width='0%';
+ requestAnimationFrame(()=>requestAnimationFrame(()=>{bar.style.transition=`width ${SLIDE_INTERVAL}ms linear`;bar.style.width='100%';}));
+}
+function showSlide(index){
+ slideIndex=index;restartSlideProgress();const item=slideItems[index];const next=showingA?'slide-a':'slide-b';const prev=showingA?'slide-b':'slide-a';
+ const img=document.getElementById(next);img.onload=()=>{img.classList.add('show');document.getElementById(prev).classList.remove('show');};img.onerror=()=>{img.classList.remove('show');};img.src=item.imageUrl;
+ showingA=!showingA;
+ document.getElementById('slide-title').textContent=item.name||'CIN CIN BREWERY';
+ document.getElementById('slide-desc').textContent=[item.style,item.abv?'ABV '+item.abv:''].filter(Boolean).join(' · ')||'Brewed with Mt. Fuji spring water.';
+ document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===index));
+}
+loadMenu();setInterval(loadMenu,REFRESH_INTERVAL);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)loadMenu();});
 </script>
-
-
 </body>
-
 </html>
