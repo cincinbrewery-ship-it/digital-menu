@@ -10,7 +10,13 @@
 html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
 body.random-mode{display:block;padding:0}body.random-mode .left,body.random-mode .right{display:none!important}
 #random-screen{display:none;position:fixed;inset:0;background:#080b09;z-index:20;overflow:hidden}body.random-mode #random-screen{display:block}
-#random-image{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity 1s ease}#random-image.show{opacity:1}
+.random-stage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:1.2vw;padding:2vw;background:#080b09}
+.random-photo{display:block;max-width:100%;max-height:100%;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity 1s ease;min-width:0}
+.random-photo.show{opacity:1}
+#random-screen.paired .random-stage{flex-direction:row;padding:2vw 3vw;gap:2vw}
+#random-screen.paired .random-photo{width:calc(50% - 1vw);height:100%;object-fit:contain}
+#random-screen.single .random-stage{padding:1.5vw}
+#random-screen.single .random-photo{width:100%;height:100%;object-fit:contain}
 #random-progress{position:absolute;left:0;right:0;bottom:0;height:5px;background:rgba(255,255,255,.2);z-index:2}#random-progress-fill{height:100%;width:0;background:var(--gold)}
 body{padding:2.4vh 2.2vw;display:grid;grid-template-columns:40% 1fr;gap:1.7vw;background:radial-gradient(ellipse at 20% 10%,#243329 0%,#17211b 42%,#101713 100%)}
 .left{min-width:0;display:flex;flex-direction:column;min-height:0}
@@ -87,7 +93,7 @@ body{padding:2.4vh 2.2vw;display:grid;grid-template-columns:40% 1fr;gap:1.7vw;ba
   <div class="slide-dots" id="slide-dots"></div>
   <div class="slide-progress" aria-label="Slideshow progress"><div class="slide-progress-fill" id="slide-progress-fill"></div></div>
 </section>
-<section id="random-screen" aria-label="CIN CIN photo gallery"><img id="random-image" alt="CIN CIN BREWERY photo"><div id="random-progress"><div id="random-progress-fill"></div></div></section>
+<section id="random-screen" class="single" aria-label="CIN CIN photo gallery"><div class="random-stage"><img class="random-photo" id="random-image-a" alt="CIN CIN BREWERY photo"><img class="random-photo" id="random-image-b" alt="CIN CIN BREWERY photo"></div><div id="random-progress"><div id="random-progress-fill"></div></div></section>
 <script>
 const MENU_API_URL='https://script.google.com/macros/s/AKfycbyVtOvcztnCM8XBcrqJ7Qgzd24hyPgwwUaw_lNJCKUUPqxDCsq5QxIdqZRDUBY7l7I/exec';
 const REFRESH_INTERVAL=60000;
@@ -95,7 +101,7 @@ const SLIDE_INTERVAL=20000;
 const RANDOM_INTERVAL=10000;
 const RANDOM_COUNT=18;
 let slideItems=[],slideIndex=0,showingA=true,slideTimer=null,slideSignature='';
-let randomImages=[],randomPlaylist=[],randomIndex=0,randomTimer=null,inRandomMode=false;
+let randomImages=[],randomPlaylist=[],randomGroups=[],randomIndex=0,randomTimer=null,inRandomMode=false;
 async function loadMenu(){
  const message=document.getElementById('message');
  try{
@@ -191,30 +197,64 @@ function startRandomMode(){
   [randomPlaylist[i],randomPlaylist[j]]=[randomPlaylist[j],randomPlaylist[i]];
  }
  randomIndex=0;
- showRandomImage();
- randomTimer=setInterval(()=>{
-  randomIndex++;
-  if(randomIndex>=Math.min(RANDOM_COUNT,randomPlaylist.length)){
-   clearInterval(randomTimer);randomTimer=null;
-   document.body.classList.remove('random-mode');
-   inRandomMode=false;
-   setupSlideshow(slideItems,0);
-   return;
-  }
+ buildRandomGroups(randomPlaylist).then(groups=>{
+  if(!inRandomMode)return;
+  randomGroups=groups.slice(0,RANDOM_COUNT);
+  if(!randomGroups.length){finishRandomMode();return;}
   showRandomImage();
- },RANDOM_INTERVAL);
+  randomTimer=setInterval(()=>{
+   randomIndex++;
+   if(randomIndex>=randomGroups.length){finishRandomMode();return;}
+   showRandomImage();
+  },RANDOM_INTERVAL);
+ });
+}
+async function buildRandomGroups(playlist){
+ const measured=await Promise.all(playlist.map(async entry=>{
+  const url=typeof entry==='string'?entry:(entry.url||entry.imageUrl||'');
+  if(!url)return {entry,url,portrait:false};
+  try{
+   const img=new Image();img.src=url;
+   await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject;});
+   return {entry,url,portrait:img.naturalHeight>img.naturalWidth};
+  }catch(e){return {entry,url,portrait:false};}
+ }));
+ const groups=[];
+ for(let i=0;i<measured.length;i++){
+  const current=measured[i];
+  if(!current.url)continue;
+  if(current.portrait){
+   // 直後も縦長なら2枚を左右に配置。奇数枚目は単独表示。
+   if(i+1<measured.length && measured[i+1].portrait && measured[i+1].url){
+    groups.push([current,measured[i+1]]);i++;
+   }else groups.push([current]);
+  }else groups.push([current]);
+ }
+ return groups;
+}
+function finishRandomMode(){
+ if(randomTimer){clearInterval(randomTimer);randomTimer=null;}
+ document.body.classList.remove('random-mode');
+ inRandomMode=false;
+ setupSlideshow(slideItems,0);
 }
 function showRandomImage(){
- const img=document.getElementById('random-image');
- const entry=randomPlaylist[randomIndex];
- const url=typeof entry==='string'?entry:(entry.url||entry.imageUrl||'');
+ const screen=document.getElementById('random-screen');
+ const a=document.getElementById('random-image-a');
+ const b=document.getElementById('random-image-b');
+ const group=randomGroups[randomIndex]||[];
+ screen.classList.toggle('paired',group.length===2);
+ screen.classList.toggle('single',group.length!==2);
+ [a,b].forEach((img,i)=>{img.classList.remove('show');img.removeAttribute('src');});
+ group.forEach((photo,i)=>{
+  const img=i===0?a:b;
+  img.onload=()=>img.classList.add('show');
+  img.onerror=()=>img.classList.remove('show');
+  img.src=photo.url;
+ });
  const fill=document.getElementById('random-progress-fill');
  fill.style.transition='none';fill.style.width='0%';
  requestAnimationFrame(()=>requestAnimationFrame(()=>{fill.style.transition=`width ${RANDOM_INTERVAL}ms linear`;fill.style.width='100%';}));
- if(!url)return;
- img.onload=()=>img.classList.add('show');
- img.onerror=()=>img.classList.remove('show');
- img.src=url;
 }
 
 function restartSlideProgress(){
