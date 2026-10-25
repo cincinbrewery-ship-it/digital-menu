@@ -17,6 +17,10 @@ body.random-mode{display:block;padding:0}body.random-mode .left,body.random-mode
 #random-screen.paired .random-photo{width:calc(50% - 1vw);height:100%;object-fit:contain}
 #random-screen.single .random-stage{padding:1.5vw}
 #random-screen.single .random-photo{width:100%;height:100%;object-fit:contain}
+/* 単独表示では未使用の2枚目をレイアウトから外し、1枚目を全幅にする */
+#random-screen.single #random-image-b{display:none}
+#random-screen.single #random-image-a{display:block;flex:0 0 100%;width:100%;max-width:100%}
+#random-screen.paired .random-photo{display:block;flex:0 0 calc(50% - 1vw);max-width:calc(50% - 1vw)}
 #random-progress{position:absolute;left:0;right:0;bottom:0;height:5px;background:rgba(255,255,255,.2);z-index:2}#random-progress-fill{height:100%;width:0;background:var(--gold)}
 body{padding:2.4vh 2.2vw;display:grid;grid-template-columns:40% 1fr;gap:1.7vw;background:radial-gradient(ellipse at 20% 10%,#243329 0%,#17211b 42%,#101713 100%)}
 .left{min-width:0;display:flex;flex-direction:column;min-height:0}
