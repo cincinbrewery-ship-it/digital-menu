@@ -29,31 +29,31 @@ body{padding:2.4vh 2.2vw;display:grid;grid-template-columns:40% 1fr;gap:1.7vw;ba
 .logo{font-family:Skia, "Skia-Regular", Georgia, serif;font-size:3.15vw;line-height:1;font-weight:700;letter-spacing:.055em;white-space:nowrap}
 .subtitle{font-size:1.05vw;color:#c0c8c0;margin-top:.9vh}
 .tabs{display:flex;gap:.55vw;margin:1.8vh 0 2.1vh;flex-shrink:0}
-.tab{border:1px solid var(--line);border-radius:5px;padding:.75vh .85vw;color:#aeb8ae;font-size:.78vw;font-weight:700;letter-spacing:.04em;white-space:nowrap}
+.tab{border:1px solid var(--line);border-radius:5px;padding:.8vh .85vw;color:#aeb8ae;font-size:.95vw;font-weight:700;letter-spacing:.04em;white-space:nowrap}
 .tab.active{background:var(--gold);border-color:var(--gold);color:#172018}
-.section-title{font-size:1.55vw;letter-spacing:.13em;color:var(--gold);margin:0 0 .8vh;font-weight:800;flex-shrink:0}
+.section-title{font-size:1.8vw;letter-spacing:.13em;color:var(--gold);margin:0 0 .8vh;font-weight:800;flex-shrink:0}
 #beer-list{min-height:0;overflow-y:auto;overflow-x:hidden;display:flex;flex-direction:column;scrollbar-width:none;overscroll-behavior:contain}#beer-list::-webkit-scrollbar{display:none}
 #beer-list.fit{overflow:hidden}#beer-list.fit .beer-row{flex:1;min-height:0}#beer-list.scroll .beer-row{flex:0 0 auto}
 .beer-row{position:relative;transition:transform .55s ease,background .55s ease,border-color .55s ease,box-shadow .55s ease;transform-origin:left center}
 .beer-row.featured{z-index:1;transform:none;background:linear-gradient(90deg,rgba(220,174,79,.18),rgba(220,174,79,.025));border-bottom-color:rgba(220,174,79,.75);box-shadow:inset 3px 0 0 var(--gold)}
-.beer-row.featured .beer-name{color:#ffd477;text-shadow:0 0 12px rgba(220,174,79,.25);font-size:1.32vw}
+.beer-row.featured .beer-name{color:#ffd477;text-shadow:0 0 12px rgba(220,174,79,.25);font-size:1.7vw}
 .beer-row.featured .beer-style{color:#fff0cf;font-weight:800}
-.beer-row.featured .beer-abv{color:#ffe0a0;font-size:.82vw;font-weight:900}
+.beer-row.featured .beer-abv{color:#ffe0a0;font-size:1.05vw;font-weight:900}
 .beer-row.featured .price-line strong{color:#ffe0a0}
-.beer-row{padding:1.05vh 0 .9vh;border-bottom:1px solid rgba(235,241,232,.11);display:grid;grid-template-columns:minmax(0,1fr) 10.5vw;gap:.7vw;align-items:center;flex-shrink:0}
+.beer-row{padding:1.15vh 0 1.05vh;border-bottom:1px solid rgba(235,241,232,.11);display:grid;grid-template-columns:minmax(0,1fr) 11.5vw;gap:.8vw;align-items:center;flex-shrink:0}
 .beer-main{min-width:0;padding-left:.65vw}
-.beer-name{font-size:1.22vw;font-weight:800;line-height:1.16;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.beer-style{font-size:.78vw;color:#b6c0b7;margin-top:.28vh;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.beer-abv{font-size:.72vw;color:var(--gold);margin-top:.25vh;font-weight:700}
+.beer-name{font-size:1.55vw;font-weight:800;line-height:1.16;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.beer-style{font-size:1.05vw;color:#b6c0b7;margin-top:.28vh;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.beer-abv{font-size:.98vw;color:var(--gold);margin-top:.25vh;font-weight:700}
 .price-header,.prices{display:grid;grid-template-columns:1fr 1fr;gap:.25vw;text-align:center;white-space:nowrap}
-.price-header{margin:0 0 .25vh auto;width:10.5vw;color:#aeb8ae;font-size:.58vw;font-weight:800;letter-spacing:.1em}
+.price-header{margin:0 0 .35vh auto;width:11.5vw;color:#aeb8ae;font-size:.88vw;font-weight:800;letter-spacing:.1em}
 .prices{align-items:center}
-.price-line{min-width:0;font-size:.88vw;font-weight:800;display:flex;flex-direction:column;align-items:center;gap:.18vh}
-.price-line small{font-size:.58vw;color:#aeb8ae;font-weight:600;letter-spacing:.04em}
+.price-line{min-width:0;font-size:1.28vw;font-weight:800;display:flex;flex-direction:column;align-items:center;gap:.18vh}
+.price-line small{font-size:.88vw;color:#aeb8ae;font-weight:600;letter-spacing:.04em}
 .price-line.empty{visibility:hidden}
 .price-line.single{grid-column:1 / -1;justify-self:center}
 .price-line.single small{color:var(--gold)}
-.footer{margin-top:auto;padding-top:1.2vh;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:1vw;color:#aeb8ae;font-size:.68vw;flex-shrink:0}
+.footer{margin-top:auto;padding-top:1.2vh;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:1vw;color:#aeb8ae;font-size:.78vw;flex-shrink:0}
 .footer strong{color:var(--gold);font-weight:700}
 .right{position:relative;min-width:0;min-height:0;border:1px solid rgba(235,241,232,.18);border-radius:17px;overflow:hidden;background:linear-gradient(145deg,#29332c,#131a16 75%);box-shadow:0 14px 50px rgba(0,0,0,.22)}
 .slide-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease;filter:brightness(.72)}
